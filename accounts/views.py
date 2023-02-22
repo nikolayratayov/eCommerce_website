@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.contrib import messages
+from django.shortcuts import render, redirect
 from .forms import RegistrationForm
 from .models import Account
 # Create your views here.
@@ -18,6 +19,8 @@ def register(request):
             user = Account.objects.create_user(first_name=first_name, last_name=last_name, email=email, password=password, username=username)
             user.phone_number = phone_number
             user.save()
+            messages.success(request, 'Registration successful.')
+            return redirect('register')
     else:
         form = RegistrationForm()
     context = {
