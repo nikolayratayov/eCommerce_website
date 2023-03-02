@@ -9,5 +9,6 @@ urlpatterns = [
     path('dashboard/', dashboard, name='dashboard'),
     path('', dashboard, name='dashboard'),
     path('forgotPassword/', forgotPassword, name='forgotPassword'),
-    path('resetpassword_validate/<uidb64>/<token>/', activate, name='resetpassword_validate'),
+    path('resetpassword_validate/<uidb64>/<token>/', resetpassword_validate, name='resetpassword_validate'),
+    path('resetPassword/', resetPassword, name='resetPassword')
 ]
