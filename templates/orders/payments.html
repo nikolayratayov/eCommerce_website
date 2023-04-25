@@ -96,7 +96,7 @@
 			<p class="text-center mb-3">
 				<img src="{% static './images/misc/payments.png' %}" height="26">
 			</p>
-			<a href="{% url 'checkout' %}" class="btn btn-primary btn-block"> Make payment </a>
+			<a href="#" class="btn btn-primary btn-block" onclick="sendData()"> Make payment </a>
 
 		</div> <!-- card-body.// -->
 		</div> <!-- card.// -->
@@ -111,5 +111,50 @@
 </div> <!-- container .//  -->
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
+<script>
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
 
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+
+function sendData(){
+let amount = "{{ grand_total }}"
+let url = "{% url 'payments' %}"
+let csrftoken = getCookie('csrftoken');
+let orderID = "{{order.order_number}}"
+let payment_method = 'PayPal'
+
+
+					fetch(url, {
+						method : "POST",
+						headers: {
+							"Content-type": "application/json",
+							"X-CSRFToken": csrftoken,
+						},
+						body: JSON.stringify({
+							orderID: orderID,
+							transID: 'test',
+							payment_method: payment_method,
+							status: 'COMPLETED',
+						}),
+					});
+
+<!--				  .then((response) => response.json())-->
+<!--				  .then((data) => {-->
+<!--						console.log('da')-->
+<!--					});-->
+				}
+</script>
 {% endblock %}
