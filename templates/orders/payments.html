@@ -135,6 +135,7 @@ let url = "{% url 'payments' %}"
 let csrftoken = getCookie('csrftoken');
 let orderID = "{{order.order_number}}"
 let payment_method = 'PayPal'
+let redirect_url = "{% url 'order_complete' %}"
 
 
 					fetch(url, {
@@ -149,12 +150,11 @@ let payment_method = 'PayPal'
 							payment_method: payment_method,
 							status: 'COMPLETED',
 						}),
+					})
+				  .then((response) => response.json())
+				  .then((data) => {
+						window.location.href = redirect_url + '?order_number=' + data.order_number + '&payment_id=' + data.transID;
 					});
-
-<!--				  .then((response) => response.json())-->
-<!--				  .then((data) => {-->
-<!--						console.log('da')-->
-<!--					});-->
 				}
 </script>
 {% endblock %}

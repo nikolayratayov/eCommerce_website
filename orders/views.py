@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from carts.models import CartItem
 from .forms import OrderForm
@@ -60,7 +61,12 @@ def payments(request):
     send_email = EmailMessage(mail_subject, message, to=[to_email])
     send_email.send()
 
-    return render(request, 'orders/payments.html')
+    data = {
+        'order_number': order.order_number,
+        'transID': payment.payment_id
+    }
+
+    return JsonResponse(data)
 
 
 def place_order(request, total=0, quantity=0):
@@ -116,3 +122,7 @@ def place_order(request, total=0, quantity=0):
             return render(request, 'orders/payments.html', context)
     else:
         return redirect('checkout')
+
+
+def order_complete(request):
+    return render(request, 'orders/order_complete.html')
