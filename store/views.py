@@ -61,7 +61,7 @@ def search(request):
 
 def submit_review(request, product_id):
     url = request.META.get('HTTP_REFERER')
-    if request.mehtod == 'POST':
+    if request.method == 'POST':
         try:
             reviews = ReviewRating.objects.get(user__id=request.user.id, product__id=product_id)
             form = ReviewForm(request.POST, instance=reviews)
@@ -79,3 +79,5 @@ def submit_review(request, product_id):
                 data.product_id = product_id
                 data.user_id = request.user.id
                 data.save()
+                messages.success(request, 'Thank you! Your review has been submitted!')
+                return redirect(url)
