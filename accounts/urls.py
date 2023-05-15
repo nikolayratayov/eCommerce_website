@@ -13,4 +13,5 @@ urlpatterns = [
     path('resetPassword/', resetPassword, name='resetPassword'),
     path('my_orders/', my_orders, name='my_orders'),
     path('edit_profile/', edit_profile, name='edit_profile'),
+    path('change_password/', change_password, name='change_password'),
 ]
